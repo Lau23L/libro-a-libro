@@ -33,3 +33,7 @@ Base de datos: PostgreSQL
 ## Estado del proyecto
 
 En fase de planificación y diseño.
+
+## Database Diagram
+
+![Database Diagram](diagramas/database-diagram.png)
