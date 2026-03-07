@@ -18,13 +18,17 @@
 <div id="formularioLibro" style="display:none;">
   <h2>Publicar un libro</h2>
 
-  <input type="text" placeholder="Título del libro"><br>
-  <input type="text" placeholder="Autor"><br>
-  <input type="text" placeholder="Género"><br>
-  <textarea placeholder="Descripción"></textarea><br>
+  <input id="titulo" type="text" placeholder="Título del libro"><br>
+  <input id="autor" type="text" placeholder="Autor"><br>
+  <input id="genero" type="text" placeholder="Género"><br>
+  <textarea id="descripcion" placeholder="Descripción"></textarea><br>
 
-  <button>Publicar</button>
+  <button id="guardarLibro">Publicar</button>
 </div>
+
+<h2>Libros publicados</h2>
+
+<div id="listaLibros"></div>
 
 <div class="search-container">
 <input type="text" id="searchInput" placeholder="Buscar por título o autor...">
@@ -53,6 +57,35 @@ boton.addEventListener("click", function() {
   } else {
     formulario.style.display = "none"
   }
+
+})
+
+</script>
+
+<script>
+
+const guardarBtn = document.getElementById("guardarLibro")
+
+guardarBtn.addEventListener("click", function() {
+
+  const titulo = document.getElementById("titulo").value
+  const autor = document.getElementById("autor").value
+  const genero = document.getElementById("genero").value
+  const descripcion = document.getElementById("descripcion").value
+
+  const lista = document.getElementById("listaLibros")
+
+  const nuevoLibro = document.createElement("div")
+
+  nuevoLibro.innerHTML = `
+    <h3>${titulo}</h3>
+    <p><strong>Autor:</strong> ${autor}</p>
+    <p><strong>Género:</strong> ${genero}</p>
+    <p>${descripcion}</p>
+    <hr>
+  `
+
+  lista.appendChild(nuevoLibro)
 
 })
 
