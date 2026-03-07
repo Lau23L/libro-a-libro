@@ -32,3 +32,15 @@ main {
 .book h3 {
     margin-top: 0;
 }
+
+.search-container {
+    text-align: center;
+    margin: 20px;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 300px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}

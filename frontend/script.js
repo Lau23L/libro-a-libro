@@ -36,3 +36,24 @@ books.forEach(book => {
     bookList.appendChild(bookCard);
 
 });
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", function() {
+
+    const searchTerm = searchInput.value.toLowerCase();
+    const bookCards = document.querySelectorAll(".book");
+
+    bookCards.forEach(card => {
+
+        const text = card.innerText.toLowerCase();
+
+        if (text.includes(searchTerm)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+});
