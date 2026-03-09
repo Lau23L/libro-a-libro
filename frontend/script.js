@@ -3,12 +3,39 @@ let books = JSON.parse(localStorage.getItem("books")) || [];
 const bookList = document.querySelector(".book-list");
 const guardarBtn = document.getElementById("guardarLibro");
 
+const botonPublicar = document.getElementById("publicarBtn");
+const modal = document.getElementById("formularioModal");
+const cerrar = document.querySelector(".cerrar");
+
+const searchInput = document.getElementById("searchInput");
+
+
+/* ---------------- POPUP ---------------- */
+
+botonPublicar.onclick = function () {
+  modal.style.display = "block";
+};
+
+cerrar.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+
+/* ---------------- MOSTRAR LIBROS ---------------- */
+
 function renderBook(book, index) {
 
   const bookCard = document.createElement("div");
   bookCard.classList.add("book");
 
   bookCard.innerHTML = `
+    ${book.imagen ? `<img src="${book.imagen}" class="book-img">` : ""}
     <h3>${book.titulo}</h3>
     <p>Autor: ${book.autor}</p>
     <p>Género: ${book.genero}</p>
@@ -31,75 +58,89 @@ function renderBook(book, index) {
   });
 
   bookList.appendChild(bookCard);
-
 }
+
 
 books.forEach((book, index) => {
   renderBook(book, index);
 });
 
 
-guardarBtn.addEventListener("click", function() {
+/* ---------------- GUARDAR LIBRO ---------------- */
 
-  const titulo = document.getElementById("titulo").value
-  const autor = document.getElementById("autor").value
-  const genero = document.getElementById("genero").value
-  const descripcion = document.getElementById("descripcion").value
-  const precio = document.getElementById("precio").value
-  const intercambio = document.getElementById("intercambio").checked
-  
+guardarBtn.addEventListener("click", function () {
 
-  const nuevoLibro = {
-    titulo: titulo,
-    autor: autor,
-    genero: genero,
-    descripcion: descripcion,
-    precio: precio,
-    intercambio: intercambio
+  const titulo = document.getElementById("titulo").value;
+  const autor = document.getElementById("autor").value;
+  const genero = document.getElementById("genero").value;
+  const descripcion = document.getElementById("descripcion").value;
+  const precio = document.getElementById("precio").value;
+  const intercambio = document.getElementById("intercambio").checked;
 
-  }
+  const imagenInput = document.getElementById("imagenLibro");
+  const file = imagenInput.files[0];
 
-  books.push(nuevoLibro)
+  const reader = new FileReader();
 
-  localStorage.setItem("books", JSON.stringify(books))
+  reader.onload = function () {
 
-  const bookCard = document.createElement("div");
-  bookCard.classList.add("book");
+    const nuevoLibro = {
+      titulo,
+      autor,
+      genero,
+      descripcion,
+      precio,
+      intercambio,
+      imagen: reader.result
+    };
 
-  bookCard.innerHTML = `
-  <h3>${titulo}</h3>
-  <p>Autor: ${autor}</p>
-  <p>Género: ${genero}</p>
-  <p>${descripcion}</p>
-  <p>Precio: $${precio}</p>
-  <p>${intercambio ? "Disponible para intercambio" : ""}</p>
-  <button class="delete-btn">Eliminar</button>
-  `;
-
-  bookList.appendChild(bookCard);
-
-  document.getElementById("titulo").value = ""
-  document.getElementById("autor").value = ""
-  document.getElementById("genero").value = ""
-  document.getElementById("descripcion").value = ""
-  document.getElementById("precio").value = ""
-  document.getElementById("intercambio").checked = false
-
-  const deleteBtn = bookCard.querySelector(".delete-btn");
-
-  deleteBtn.addEventListener("click", function() {
-
-    books = books.filter(b => b.titulo !== titulo);
+    books.push(nuevoLibro);
 
     localStorage.setItem("books", JSON.stringify(books));
 
-    bookCard.remove();
+    renderBook(nuevoLibro, books.length - 1);
 
-  });
+    modal.style.display = "none";
+
+  };
+
+  if (file) {
+
+    reader.readAsDataURL(file);
+
+  } else {
+
+    const nuevoLibro = {
+      titulo,
+      autor,
+      genero,
+      descripcion,
+      precio,
+      intercambio,
+      imagen: ""
+    };
+
+    books.push(nuevoLibro);
+
+    localStorage.setItem("books", JSON.stringify(books));
+
+    renderBook(nuevoLibro, books.length - 1);
+
+    modal.style.display = "none";
+  }
+
+
+  document.getElementById("titulo").value = "";
+  document.getElementById("autor").value = "";
+  document.getElementById("genero").value = "";
+  document.getElementById("descripcion").value = "";
+  document.getElementById("precio").value = "";
+  document.getElementById("intercambio").checked = false;
 
 });
 
-const searchInput = document.getElementById("searchInput");
+
+/* ---------------- BUSCADOR ---------------- */
 
 searchInput.addEventListener("input", function () {
 
@@ -120,4 +161,5 @@ searchInput.addEventListener("input", function () {
   });
 
 });
+
 
