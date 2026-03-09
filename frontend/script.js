@@ -19,6 +19,8 @@ const books = [
     }
 ];
 
+let books = JSON.parse(localStorage.getItem("books")) || [];
+
 const bookList = document.querySelector(".book-list");
 
 books.forEach(book => {
@@ -39,21 +41,25 @@ books.forEach(book => {
 
 const searchInput = document.getElementById("searchInput");
 
-searchInput.addEventListener("input", function() {
+guardarBtn.addEventListener("click", function() {
 
-    const searchTerm = searchInput.value.toLowerCase();
-    const bookCards = document.querySelectorAll(".book");
+  const titulo = document.getElementById("titulo").value
+  const autor = document.getElementById("autor").value
+  const genero = document.getElementById("genero").value
+  const descripcion = document.getElementById("descripcion").value
 
-    bookCards.forEach(card => {
+  const nuevoLibro = {
+    titulo: titulo,
+    autor: autor,
+    genero: genero,
+    descripcion: descripcion
+  }
 
-        const text = card.innerText.toLowerCase();
+  books.push(nuevoLibro)
 
-        if (text.includes(searchTerm)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
+  localStorage.setItem("books", JSON.stringify(books))
 
-    });
+})
+
 
 });
