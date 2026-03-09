@@ -25,38 +25,49 @@
 
 </header>
 
-<div id="formularioLibro" style="display:none;">
-  <h2>Publicar un libro</h2>
+<div id="formularioModal" class="modal">
 
-  <input id="titulo" type="text" placeholder="Título del libro"><br>
-  <input id="autor" type="text" placeholder="Autor"><br>
-  <select id="genero">
-    <option value="">Seleccionar género</option>
-    <option value="Novela">Novela</option>
-    <option value="Fantasía">Fantasía</option>
-    <option value="Ciencia ficción">Ciencia ficción</option>
-    <option value="Terror">Terror</option>
-    <option value="Romance">Romance</option>
-    <option value="Historia">Historia</option>
-    <option value="Autoayuda">Autoayuda</option>
-    <option value="Infantil">Infantil</option>
-    <option value="Educativo">Educativo</option>
-  </select><br>
-  <textarea id="descripcion" placeholder="Descripción"></textarea><br>
+  <div class="modal-content">
 
-  <input id="precio" type="number" placeholder="Precio en pesos">
-  <label>Imagen del libro</label>
-  <input type="file" id="imagenLibro" accept="image/*">
+    <span class="cerrar">&times;</span>
 
-  <label>
-  <input id="intercambio" type="checkbox">
-  Disponible para intercambio
-  </label>
+    <h2>Publicar un libro</h2>
 
-  <button id="guardarLibro">Publicar</button>
+    <input id="titulo" type="text" placeholder="Título del libro">
+    <input id="autor" type="text" placeholder="Autor">
+
+    <select id="genero">
+      <option value="">Seleccionar género</option>
+      <option value="Novela">Novela</option>
+      <option value="Fantasía">Fantasía</option>
+      <option value="Ciencia ficción">Ciencia ficción</option>
+      <option value="Terror">Terror</option>
+      <option value="Romance">Romance</option>
+      <option value="Historia">Historia</option>
+      <option value="Autoayuda">Autoayuda</option>
+      <option value="Infantil">Infantil</option>
+      <option value="Educativo">Educativo</option>
+    </select>
+
+    <textarea id="descripcion" placeholder="Descripción"></textarea>
+
+    <input id="precio" type="number" placeholder="Precio en pesos">
+
+    <label>Imagen del libro</label>
+    <input type="file" id="imagenLibro" accept="image/*">
+
+    <label>
+      <input id="intercambio" type="checkbox">
+      Disponible para intercambio
+    </label>
+
+    <button id="guardarLibro">Publicar</button>
+
+  </div>
+
 </div>
 
-
+    
 <div id="listaLibros"></div>
 
 <main>
@@ -67,8 +78,6 @@
 </div>
 
 </main>
-
-<script src="script.js"></script>
 
 <script>
 
@@ -87,6 +96,6 @@ boton.addEventListener("click", function() {
 
 </script>
 
-
+<script src="script.js"></script>
 </body>
 </html>

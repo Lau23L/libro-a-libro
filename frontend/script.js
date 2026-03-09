@@ -13,7 +13,7 @@ const searchInput = document.getElementById("searchInput");
 /* ---------------- POPUP ---------------- */
 
 botonPublicar.onclick = function () {
-  modal.style.display = "block";
+  modal.style.display = "flex";
 };
 
 cerrar.onclick = function () {
