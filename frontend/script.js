@@ -59,7 +59,6 @@ guardarBtn.addEventListener("click", function() {
 
   localStorage.setItem("books", JSON.stringify(books))
 
-})
-
-
 });
+
+
