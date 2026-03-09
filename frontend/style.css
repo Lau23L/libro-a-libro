@@ -1,16 +1,36 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
+    background: linear-gradient(180deg,#bfceeb,#d8e3f1);
     margin: 0;
     padding: 0;
 }
 
 header {
-  background: linear-gradient(135deg, #62cedf, #6ad0db);
-  padding: 40px;
+  background:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
+    url("imagenes/libros-header.jpg");
+    
+  background-size: cover;
+  background-position: center;
+  
+  padding: 60px 20px;
   text-align: center;
   color: white;
 }
+
+
+header h1 {
+  font-size: 36px;
+  letter-spacing: 1px;
+  margin: 0;
+  font-weight: 700;
+}
+
+header p {
+  opacity: 0.9;
+  margin-top: 8px;
+}
+
 
 main {
     padding: 20px;
@@ -28,11 +48,10 @@ main {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
 }
+
 
 
 .book:hover {
