@@ -1,27 +1,7 @@
-const books = [
-    {
-        title: "Harry Potter y la piedra filosofal",
-        author: "J.K. Rowling",
-        price: 5000,
-        condition: "Buen estado"
-    },
-    {
-        title: "El principito",
-        author: "Antoine de Saint-Exupéry",
-        price: 2000,
-        condition: "Usado"
-    },
-    {
-        title: "1984",
-        author: "George Orwell",
-        price: 4500,
-        condition: "Muy bueno"
-    }
-];
-
 let books = JSON.parse(localStorage.getItem("books")) || [];
 
 const bookList = document.querySelector(".book-list");
+const guardarBtn = document.getElementById("guardarLibro");
 
 books.forEach(book => {
 
@@ -38,8 +18,6 @@ books.forEach(book => {
     bookList.appendChild(bookCard);
 
 });
-
-const searchInput = document.getElementById("searchInput");
 
 guardarBtn.addEventListener("click", function() {
 
