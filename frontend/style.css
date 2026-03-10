@@ -8,10 +8,14 @@ body {
 header {
   background:
     linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)),
-    url("imagenes/libros-header.jpg");
+    url("../imagenes/libros-header.jpg");
     
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  min-height: 100px;
   
   padding: 60px 20px;
   text-align: center;
