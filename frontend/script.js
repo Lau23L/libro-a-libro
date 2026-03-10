@@ -40,22 +40,23 @@ function renderBook(book, index) {
     <p>Autor: ${book.autor}</p>
     <p>Género: ${book.genero}</p>
     <p>${book.descripcion}</p>
-    <p>Precio: $${book.precio}</p>
-    <p>${book.intercambio ? "Disponible para intercambio" : ""}</p>
+    <p>Precio: <strong>$${Number(book.precio).toLocaleString('es-AR')}</strong></p>
+    ${book.intercambio ? `<span class="badge-intercambio">🔄 Intercambio</span>` : ""}
     <button class="delete-btn">Eliminar</button>
   `;
 
   const deleteBtn = bookCard.querySelector(".delete-btn");
 
   deleteBtn.addEventListener("click", function () {
-
-    books.splice(index, 1);
-
-    localStorage.setItem("books", JSON.stringify(books));
-
-    location.reload();
-
-  });
+    bookCard.classList.add("removing"); // Agregamos la clase de animación
+    
+    setTimeout(() => { // Esperamos a que termine la animación para borrar
+        books.splice(index, 1);
+        localStorage.setItem("books", JSON.stringify(books));
+        bookList.innerHTML = ""; 
+        books.forEach((b, i) => renderBook(b, i));
+    }, 300);
+});
 
   bookList.appendChild(bookCard);
 }
@@ -78,6 +79,13 @@ guardarBtn.addEventListener("click", function () {
   const intercambio = document.getElementById("intercambio").checked;
 
   const imagenInput = document.getElementById("imagenLibro");
+  
+  // Validación simple: Si no hay título o el precio es menor a 0, detenemos todo
+  if (titulo.trim() === "" || precio < 0) {
+    alert("Por favor, completa el título y asegúrate de que el precio sea válido.");
+    return; // El código se detiene aquí y no guarda nada
+  }
+
   const file = imagenInput.files[0];
 
   const reader = new FileReader();
@@ -143,21 +151,18 @@ guardarBtn.addEventListener("click", function () {
 /* ---------------- BUSCADOR ---------------- */
 
 searchInput.addEventListener("input", function () {
-
   const term = searchInput.value.toLowerCase();
-
   const cards = document.querySelectorAll(".book");
+  let encontrados = 0;
 
   cards.forEach(card => {
-
     const text = card.innerText.toLowerCase();
-
     if (text.includes(term)) {
-      card.style.display = "block";
+      card.style.display = "flex"; // Usamos flex para mantener tu diseño
+      encontrados++;
     } else {
       card.style.display = "none";
     }
-
   });
 
 });
