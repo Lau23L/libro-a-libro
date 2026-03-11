@@ -16,6 +16,14 @@
     <h1>Libro a Libro</h1>
   </div>
 
+  <div class="user-info">
+
+  <span id="usuarioNombre"></span>
+
+  <button id="logoutBtn">Cerrar sesión</button>
+
+  </div>
+
   <div class="header-controls">
 
     <input type="text" id="searchInput" placeholder="Buscar por título o autor...">
@@ -91,6 +99,15 @@
 <h2>Libros disponibles</h2>
 
 <div class="book-list">
+</div>
+
+<div id="mensajeModal" class="modal">
+  <div class="modal-content">
+    <span class="cerrar-mensaje cerrar">&times;</span>
+    <h2 id="mensajeTitulo">Enviar mensaje</h2>
+    <textarea id="textoMensaje" placeholder="Hola! Me interesa tu libro..."></textarea>
+    <button id="enviarMensajeBtn">Enviar Mensaje</button>
+  </div>
 </div>
 
 </main>

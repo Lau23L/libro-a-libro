@@ -1,16 +1,16 @@
-let books = JSON.parse(localStorage.getItem("books")) || [];
-
 const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"))
-
-const usuarioNombre = document.getElementById("usuarioNombre")
 
 if(!usuarioActivo){
 alert("Debes iniciar sesión")
 window.location.href = "login.html"
 }
 
+let books = JSON.parse(localStorage.getItem("books")) || [];
+
+const usuarioNombre = document.getElementById("usuarioNombre")
+
 if(usuarioActivo && usuarioNombre){
-usuarioNombre.textContent = "Hola " + usuarioActivo.nombre
+  usuarioNombre.textContent = "Hola " + usuarioActivo.nombre
 }
 
 const logoutBtn = document.getElementById("logoutBtn")
@@ -52,6 +52,9 @@ window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+  if (event.target == mensajeModal) {
+    mensajeModal.style.display = "none";
+  }
 };
 
 
@@ -62,6 +65,9 @@ function renderBook(book, index) {
   const bookCard = document.createElement("div");
   bookCard.classList.add("book");
 
+  // Permitir eliminar si el libro es mío O si no tiene dueño (undefined)
+  const puedeEliminar = !book.usuarioId || book.usuarioId === usuarioActivo.id;
+
   bookCard.innerHTML = `
     ${book.imagen ? `<img src="${book.imagen}" class="book-img">` : ""}
     <h3>${book.titulo}</h3>
@@ -70,21 +76,29 @@ function renderBook(book, index) {
     <p>${book.descripcion}</p>
     <p>Precio: <strong>$${Number(book.precio).toLocaleString('es-AR')}</strong></p>
     ${book.intercambio ? `<span class="badge-intercambio">🔄 Intercambio</span>` : ""}
-    <button class="delete-btn">Eliminar</button>
+    <p class="vendedor">Publicado por: ${book.usuarioNombre}</p>
+    
+    ${puedeEliminar ? 
+            '<button class="delete-btn">Eliminar</button>' : 
+            '<button class="contact-btn">Contactar</button>'}
   `;
 
   const deleteBtn = bookCard.querySelector(".delete-btn");
 
-  deleteBtn.addEventListener("click", function () {
-    bookCard.classList.add("removing"); // Agregamos la clase de animación
+  // Solo agregamos el evento SI el botón existe (es decir, si el libro es mío)
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", function () {
+      bookCard.classList.add("removing"); // Agregamos la clase de animación
     
-    setTimeout(() => { // Esperamos a que termine la animación para borrar
+      setTimeout(() => { // Esperamos a que termine la animación para borrar
         books.splice(index, 1);
         localStorage.setItem("books", JSON.stringify(books));
         bookList.innerHTML = ""; 
         books.forEach((b, i) => renderBook(b, i));
-    }, 300);
-});
+      }, 300);
+    });
+  }  
+    
 
   bookList.appendChild(bookCard);
 }
@@ -123,7 +137,8 @@ guardarBtn.addEventListener("click", function () {
       precio,
       intercambio,
       imagen: imgData,
-      usuarioId: usuarioActivo ? usuarioActivo.id : null // Evita error si no hay usuario
+      usuarioId: usuarioActivo.id, 
+      usuarioNombre: usuarioActivo.nombre
     };
 
     books.push(nuevoLibro);
@@ -148,6 +163,72 @@ guardarBtn.addEventListener("click", function () {
   }
 });
 
+
+/* ---------------- SISTEMA DE MENSAJERÍA ---------------- */
+
+const mensajeModal = document.getElementById("mensajeModal");
+const cerrarMensaje = document.querySelector(".cerrar-mensaje");
+const enviarMensajeBtn = document.getElementById("enviarMensajeBtn");
+let libroSeleccionado = null;
+
+// Evento para abrir el modal de contacto
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("contact-btn")) {
+    // Buscamos cuál es el libro dueño de ese botón
+    const card = e.target.closest(".book");
+    const cards = Array.from(document.querySelectorAll(".book"));
+    const index = cards.indexOf(card);
+    
+    libroSeleccionado = books[index];
+
+    // Personalizamos el modal con el nombre del vendedor
+    const tituloModal = document.getElementById("mensajeTitulo");
+    if (tituloModal) {
+      tituloModal.innerText = `Contactar a ${libroSeleccionado.usuarioNombre || "Vendedor"}`;
+    }
+    
+    mensajeModal.style.display = "flex";
+  }
+});
+
+// Cerrar modal de mensaje
+if (cerrarMensaje) {
+  cerrarMensaje.onclick = () => {
+    mensajeModal.style.display = "none";
+  };
+}
+
+// Lógica para enviar y guardar el mensaje en LocalStorage
+if (enviarMensajeBtn) {
+  enviarMensajeBtn.onclick = function () {
+    const texto = document.getElementById("textoMensaje").value;
+
+    if (!texto.trim()) {
+      alert("Por favor, escribe un mensaje antes de enviar.");
+      return;
+    }
+
+    // Estructura del mensaje
+    const nuevoMensaje = {
+      id: Date.now(),
+      emisorId: usuarioActivo.id,
+      emisorNombre: usuarioActivo.nombre,
+      receptorId: libroSeleccionado.usuarioId,
+      libroTitulo: libroSeleccionado.titulo,
+      contenido: texto,
+      fecha: new Date().toLocaleString()
+    };
+
+    // Guardar en una lista de mensajes en LocalStorage
+    const mensajesExistentes = JSON.parse(localStorage.getItem("mensajes")) || [];
+    mensajesExistentes.push(nuevoMensaje);
+    localStorage.setItem("mensajes", JSON.stringify(mensajesExistentes));
+
+    alert("¡Mensaje enviado con éxito!");
+    mensajeModal.style.display = "none";
+    document.getElementById("textoMensaje").value = ""; // Limpiar el campo
+  };
+}
 
 /* ---------------- BUSCADOR ---------------- */
 

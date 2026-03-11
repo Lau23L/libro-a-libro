@@ -190,7 +190,6 @@ select {
   height: 100%;
   background-color: rgba(0,0,0,0.6);
 
-  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -209,6 +208,16 @@ select {
   animation: aparecer 0.25s ease;
 }
 
+/* Estilo específico para el modal de mensajes */
+#mensajeModal .modal-content {
+    max-width: 350px; /* Más pequeño para que no ocupe toda la pantalla */
+    border-top: 5px solid #363a94; /* Un detalle de color arriba */
+}
+
+#mensajeModal textarea {
+    min-height: 100px;
+    resize: none; /* Evita que el usuario lo deforme */
+}
 
 .cerrar {
   align-self: flex-end;
