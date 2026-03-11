@@ -1,5 +1,32 @@
 let books = JSON.parse(localStorage.getItem("books")) || [];
 
+const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"))
+
+const usuarioNombre = document.getElementById("usuarioNombre")
+
+if(!usuarioActivo){
+alert("Debes iniciar sesión")
+window.location.href = "login.html"
+}
+
+if(usuarioActivo && usuarioNombre){
+usuarioNombre.textContent = "Hola " + usuarioActivo.nombre
+}
+
+const logoutBtn = document.getElementById("logoutBtn")
+
+if(logoutBtn){
+
+logoutBtn.addEventListener("click", function(){
+
+localStorage.removeItem("usuarioActivo")
+
+window.location.href = "login.html"
+
+})
+
+}
+
 const bookList = document.querySelector(".book-list");
 const guardarBtn = document.getElementById("guardarLibro");
 
@@ -8,6 +35,7 @@ const modal = document.getElementById("formularioModal");
 const cerrar = document.querySelector(".cerrar");
 
 const searchInput = document.getElementById("searchInput");
+
 
 
 /* ---------------- POPUP ---------------- */
@@ -70,28 +98,23 @@ books.forEach((book, index) => {
 /* ---------------- GUARDAR LIBRO ---------------- */
 
 guardarBtn.addEventListener("click", function () {
-
   const titulo = document.getElementById("titulo").value;
   const autor = document.getElementById("autor").value;
   const genero = document.getElementById("genero").value;
   const descripcion = document.getElementById("descripcion").value;
   const precio = document.getElementById("precio").value;
   const intercambio = document.getElementById("intercambio").checked;
-
   const imagenInput = document.getElementById("imagenLibro");
-  
-  // Validación simple: Si no hay título o el precio es menor a 0, detenemos todo
+
   if (titulo.trim() === "" || precio < 0) {
-    alert("Por favor, completa el título y asegúrate de que el precio sea válido.");
-    return; // El código se detiene aquí y no guarda nada
+    alert("Por favor, completa el título y el precio.");
+    return;
   }
 
   const file = imagenInput.files[0];
 
-  const reader = new FileReader();
-
-  reader.onload = function () {
-
+  // Función para procesar el guardado final
+  const guardarFinal = (imgData) => {
     const nuevoLibro = {
       titulo,
       autor,
@@ -99,52 +122,30 @@ guardarBtn.addEventListener("click", function () {
       descripcion,
       precio,
       intercambio,
-      imagen: reader.result
+      imagen: imgData,
+      usuarioId: usuarioActivo ? usuarioActivo.id : null // Evita error si no hay usuario
     };
 
     books.push(nuevoLibro);
-
     localStorage.setItem("books", JSON.stringify(books));
-
     renderBook(nuevoLibro, books.length - 1);
-
+    
+    // Cerrar y limpiar
     modal.style.display = "none";
-
+    document.getElementById("titulo").value = "";
+    document.getElementById("autor").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("descripcion").value = "";
+    imagenInput.value = ""; // Limpiar el input de archivo
   };
 
   if (file) {
-
+    const reader = new FileReader();
+    reader.onload = () => guardarFinal(reader.result);
     reader.readAsDataURL(file);
-
   } else {
-
-    const nuevoLibro = {
-      titulo,
-      autor,
-      genero,
-      descripcion,
-      precio,
-      intercambio,
-      imagen: ""
-    };
-
-    books.push(nuevoLibro);
-
-    localStorage.setItem("books", JSON.stringify(books));
-
-    renderBook(nuevoLibro, books.length - 1);
-
-    modal.style.display = "none";
+    guardarFinal(""); // Guardar sin imagen
   }
-
-
-  document.getElementById("titulo").value = "";
-  document.getElementById("autor").value = "";
-  document.getElementById("genero").value = "";
-  document.getElementById("descripcion").value = "";
-  document.getElementById("precio").value = "";
-  document.getElementById("intercambio").checked = false;
-
 });
 
 
