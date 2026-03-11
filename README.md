@@ -26,6 +26,7 @@ El proyecto ha alcanzado su primera versión funcional estable, permitiendo un f
 | :---: | :---: | :---: |
 | ![Index](/imagenes/index.jpg) | ![Publicar](/imagenes/publicar%20libro.jpg) | ![Mensaje](/imagenes/Contactar.jpg) |
 
+<<<<<<< HEAD
 ---
 
 ## 🛠️ Guía de Uso Rápido
@@ -34,14 +35,34 @@ El proyecto ha alcanzado su primera versión funcional estable, permitiendo un f
 3. **Registro:** Crear una cuenta en `registro.html`.
 4. **Login:** Ingresar con tus credenciales.
 5. **Explorar:** ¡Publicá un libro o contactá a otro vendedor!
+=======
+## Tecnologías Implementadas
+
+-Frontend: HTML5, CSS3 (Animaciones y Flexbox), JavaScript (ES6+).
+
+-Almacenamiento: LocalStorage para persistencia de datos del lado del cliente.
+
+-Lógica: Manejo de estados de usuario y filtrado dinámico de contenido.
+>>>>>>> 9a2c42e92246739f754e96f215aa3b4968a758a5
 
 ---
 
+<<<<<<< HEAD
 ## 📈 Próximos Pasos (Roadmap)
 - [ ] Migración de datos a **PostgreSQL**.
 - [ ] Implementación de Backend con **Node.js**.
 - [ ] Panel de "Mis Mensajes" para gestionar conversaciones recibidas.
 - [ ] Geolocalización para puntos de encuentro sugeridos en Mar del Plata.
+=======
+MVP Completado 
+El proyecto ya cuenta con un flujo funcional de extremo a extremo:
+
+-Autenticación: Registro e inicio de sesión con persistencia en LocalStorage.
+
+-Gestión de Libros: Publicación con carga de imágenes y validación de autoría.
+
+-Interacción: Sistema de mensajería interna entre compradores y vendedores.
+>>>>>>> 9a2c42e92246739f754e96f215aa3b4968a758a5
 
 ## 📊 Database Diagram
 ![Database Diagram](diagramas/database-diagram.png)
