@@ -24,15 +24,24 @@ Libro a Libro será una aplicación web donde los usuarios podrán:
 - búsqueda por título o autor
 - chat entre usuarios
 
-## Tecnologías (planificadas)
+## Tecnologías Implementadas
 
-Frontend: React / Next.js  
-Backend: Node.js  
-Base de datos: PostgreSQL
+-Frontend: HTML5, CSS3 (Animaciones y Flexbox), JavaScript (ES6+).
+
+-Almacenamiento: LocalStorage para persistencia de datos del lado del cliente.
+
+-Lógica: Manejo de estados de usuario y filtrado dinámico de contenido.
 
 ## Estado del proyecto
 
-En fase de planificación y diseño.
+MVP Completado 
+El proyecto ya cuenta con un flujo funcional de extremo a extremo:
+
+-Autenticación: Registro e inicio de sesión con persistencia en LocalStorage.
+
+-Gestión de Libros: Publicación con carga de imágenes y validación de autoría.
+
+-Interacción: Sistema de mensajería interna entre compradores y vendedores.
 
 ## Database Diagram
 
