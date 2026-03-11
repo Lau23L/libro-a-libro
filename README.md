@@ -24,7 +24,7 @@ El proyecto ha alcanzado su primera versión funcional estable, permitiendo un f
 
 | Index | Publicación de Libros | Mensajería Interna |
 | :---: | :---: | :---: |
-| ![Index](/imagenes/index.jpg) | ![Publicar](/imagenes/publicar%20libro.jpg) | ![Mensaje](/imagenes/Contactar.jpg) |
+| ![Index](/imagenes/index.jpg) | ![Publicar](/imagenes/publicar-libro.jpg) | ![Mensaje](/imagenes/Contactar.jpg) |
 
 ---
 
