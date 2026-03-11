@@ -1,39 +1,47 @@
-# Libro a Libro
+# 📚 Libro a Libro
 
-Plataforma web para compra, venta e intercambio de libros usados
-enfocada en comunidad local (inicialmente Mar del Plata).
+Plataforma web para compra, venta e intercambio de libros usados enfocada en la comunidad de **Mar del Plata**.
 
-## Problema
+## 🚀 Estado del Proyecto: MVP Completado
+El proyecto ha alcanzado su primera versión funcional estable, permitiendo un flujo completo de usuario.
 
-Muchos lectores tienen libros que ya no utilizan y no existe
-una plataforma local simple para venderlos o intercambiarlos.
+### Funcionalidades actuales:
+- **Autenticación Personalizada:** Sistema de registro e inicio de sesión con validación de credenciales.
+- **Gestión de Inventario:** Los usuarios pueden publicar libros, subir imágenes y gestionar sus propias publicaciones (solo el dueño puede eliminar sus libros).
+- **Buscador Inteligente:** Filtro en tiempo real por título, autor o género.
+- **Mensajería Interna:** Sistema para contactar vendedores y acordar puntos de encuentro de forma segura.
 
-## Solución
+---
 
-Libro a Libro será una aplicación web donde los usuarios podrán:
+## 🛠️ Tecnologías Implementadas
+- **Frontend:** HTML5, CSS3 (Flexbox, Grid, Animaciones dinámicas).
+- **Lógica:** JavaScript (ES6+), manejo de eventos dinámicos y persistencia de sesión.
+- **Almacenamiento:** `LocalStorage` para persistencia de datos (Libros, Usuarios y Mensajes).
 
-- publicar libros usados
-- vender o intercambiar libros
-- contactar a otros lectores
-- coordinar encuentros seguros en lugares públicos
+---
 
-## MVP (primera versión)
+## 📱 Vista Previa
 
-- registro de usuarios
-- publicación de libros
-- búsqueda por título o autor
-- chat entre usuarios
+| Index | Publicación de Libros | Mensajería Interna |
+| :---: | :---: | :---: |
+| ![Index](/imagenes/index.jpg) | ![Publicar](/imagenes/publicar%20libro.jpg) | ![Mensaje](/imagenes/Contactar.jpg) |
 
-## Tecnologías (planificadas)
+---
 
-Frontend: React / Next.js  
-Backend: Node.js  
-Base de datos: PostgreSQL
+## 🛠️ Guía de Uso Rápido
+1. Clonar el repositorio.
+2. Abrir `index.html` en el navegador (no requiere servidor por el momento).
+3. **Registro:** Crear una cuenta en `registro.html`.
+4. **Login:** Ingresar con tus credenciales.
+5. **Explorar:** ¡Publicá un libro o contactá a otro vendedor!
 
-## Estado del proyecto
+---
 
-En fase de planificación y diseño.
+## 📈 Próximos Pasos (Roadmap)
+- [ ] Migración de datos a **PostgreSQL**.
+- [ ] Implementación de Backend con **Node.js**.
+- [ ] Panel de "Mis Mensajes" para gestionar conversaciones recibidas.
+- [ ] Geolocalización para puntos de encuentro sugeridos en Mar del Plata.
 
-## Database Diagram
-
+## 📊 Database Diagram
 ![Database Diagram](diagramas/database-diagram.png)
