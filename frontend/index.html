@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Libro a Libro</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -28,41 +29,56 @@
 <div id="formularioModal" class="modal">
 
   <div class="modal-content">
-
     <span class="cerrar">&times;</span>
 
     <h2>Publicar un libro</h2>
 
-    <input id="titulo" type="text" placeholder="Título del libro">
-    <input id="autor" type="text" placeholder="Autor">
+    <div class="input-group">
+      <i class="fa-solid fa-book"></i>
+      <input id="titulo" type="text" placeholder="Título del libro">
+    </div>
 
-    <select id="genero">
-      <option value="">Seleccionar género</option>
-      <option value="Novela">Novela</option>
-      <option value="Fantasía">Fantasía</option>
-      <option value="Ciencia ficción">Ciencia ficción</option>
-      <option value="Terror">Terror</option>
-      <option value="Romance">Romance</option>
-      <option value="Historia">Historia</option>
-      <option value="Autoayuda">Autoayuda</option>
-      <option value="Infantil">Infantil</option>
-      <option value="Educativo">Educativo</option>
-    </select>
+    <div class="input-group">
+      <i class="fa-solid fa-user-pen"></i>
+      <input id="autor" type="text" placeholder="Autor">
+    </div>
 
-    <textarea id="descripcion" placeholder="Descripción"></textarea>
+    <div class="input-group">
+      <i class="fa-solid fa-tags"></i>
+      <select id="genero">
+        <option value="">Seleccionar género</option>
+        <option value="Novela">Novela</option>
+        <option value="Fantasía">Fantasía</option>
+        <option value="Ciencia ficción">Ciencia ficción</option>
+        <option value="Terror">Terror</option>
+        <option value="Romance">Romance</option>
+        <option value="Historia">Historia</option>
+        <option value="Autoayuda">Autoayuda</option>
+        <option value="Infantil">Infantil</option>
+        <option value="Educativo">Educativo</option>
+      </select>
+    </div>
 
-    <input id="precio" type="number" placeholder="Precio en pesos">
+    <div class="input-group">
+      <i class="fa-solid fa-align-left" style="top: 20px;"></i> <textarea id="descripcion" placeholder="Descripción"></textarea>
+    </div>
 
-    <label>Imagen del libro</label>
-    <input type="file" id="imagenLibro" accept="image/*">
+    <div class="input-group">
+      <i class="fa-solid fa-hand-holding-dollar"></i>
+      <input id="precio" type="number" placeholder="Precio en pesos">
+    </div>
 
-    <label>
+    <div class="input-group-file">
+      <label for="imagenLibro"><i class="fa-solid fa-image"></i> Imagen del libro</label>
+      <input type="file" id="imagenLibro" accept="image/*">
+    </div>
+
+    <label class="checkbox-container">
       <input id="intercambio" type="checkbox">
-      Disponible para intercambio
+      <span>Disponible para intercambio</span>
     </label>
 
-    <button id="guardarLibro">Publicar</button>
-
+    <button id="guardarLibro">Publicar Libro</button>
   </div>
 
 </div>

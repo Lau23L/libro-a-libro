@@ -77,18 +77,19 @@ main {
 }
 
 .book p:nth-of-type(4) {
-  font-weight: bold;
-  color: #e00798;
+  font-weight: 500;
+  color: #e62522;
   font-size: 16px;
 }
 
 
 .book-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
+    width: 100%;
+    height: 250px; 
+    object-fit: contain; 
+    background-color: #f0f0f0; /* Un fondo gris suave por si la imagen no llena todo el ancho */
+    padding: 10px; /* Un pequeño aire para que la portada no toque los bordes */
+    box-sizing: border-box;
 }
 
 .book.removing {
@@ -160,7 +161,7 @@ button:hover {
 }
 
 #publicarBtn {
-  background-color: #a45db4;
+  background-color: #16a085;
   color: white;
   border: none;
   padding: 10px 18px;
@@ -169,7 +170,7 @@ button:hover {
 }
 
 #publicarBtn:hover {
-  background-color: #e52ac9;
+  background-color: #1abc9c;
 }
 
 select {
@@ -215,16 +216,88 @@ select {
   cursor: pointer;
 }
 
-.modal-content input,
-.modal-content textarea,
-.modal-content select {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+/* Contenedor del grupo (Icono + Input) */
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Estilo para los iconos */
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #a45db4; /* El violeta de tu botón Publicar */
+    font-size: 16px;
+    pointer-events: none; /* Para que puedas cliquear el input a través del icono */
+}
+
+/* Ajuste específico para el icono del textarea (que es más alto) */
+.input-group i.fa-align-left {
+    top: 20px;
+    transform: none;
+}
+
+/* Estilo para los Inputs, Selects y Textarea */
+.modal-content input, 
+.modal-content select, 
+.modal-content textarea {
+    width: 100%;
+    padding: 12px 15px 12px 45px !important; /* El 45px deja espacio para el icono */
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Fundamental para que no se desborde */
+}
+
+/* Efecto al hacer clic en un campo */
+.modal-content input:focus, 
+.modal-content select:focus, 
+.modal-content textarea:focus {
+    border-color: #a45db4;
+    background-color: #fdfafd;
+    outline: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px; /* Reducimos un poco el padding */
+    border-radius: 20px;
+    width: 450px;
+    
+    /* --- MEJORAS PARA LAPTOPS --- */
+    max-height: 90vh; /* Que no ocupe más del 90% del alto de la pantalla */
+    overflow-y: auto; /* Si el contenido es largo, permite scroll interno */
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espacio más compacto entre elementos */
+}
+
+.modal-content h2 {
+    font-size: 20px; /* Un poco más chico */
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.input-group {
+    margin-bottom: 10px; /* Reducimos de 15px a 10px */
+}
+
+.modal-content input, 
+.modal-content select, 
+.modal-content textarea {
+    padding: 10px 10px 10px 40px !important; /* Achicamos el padding vertical */
+}
+
+textarea#descripcion {
+    height: 80px; /* Le damos una altura fija menor para que no empuje todo */
 }
 
 .badge-intercambio {
-    background-color: #28a745; /* Verde éxito */
+    background-color: #a8d0b2; /* Verde éxito */
     color: white;
     padding: 4px 8px;
     border-radius: 4px;
@@ -233,6 +306,38 @@ select {
     text-transform: uppercase;
     display: inline-block;
     margin-bottom: 10px;
+}
+
+/* Checkbox más ordenado */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.checkbox-container input {
+    width: auto !important; /* Evita que el checkbox crezca al 100% */
+}
+
+/* Botón de Publicar con gradiente */
+#guardarLibro {
+    background: linear-gradient(135deg, #a45db4, #363a94);
+    color: white;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 10px;
+}
+
+#guardarLibro:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
 }
 
 @keyframes aparecer {
