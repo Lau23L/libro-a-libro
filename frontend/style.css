@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lora:ital@0;1&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(180deg,#bfceeb,#d8e3f1);
+    font-family: 'Lora', serif;
+    background: linear-gradient(180deg,#faf8f0, #f0ebd8);
     margin: 0;
     padding: 0;
 }
@@ -24,6 +26,7 @@ body {
 
 
 header h1 {
+  font-family: 'Playfair Display', serif;
   font-size: 36px;
   letter-spacing: 1px;
   margin: 0;
@@ -31,6 +34,7 @@ header h1 {
 }
 
 header p {
+  font-family: 'Lora', serif;
   opacity: 0.9;
   margin-top: 8px;
 }
@@ -49,14 +53,17 @@ main {
 
 
 .book {
-  background: white;
-  border-radius: 12px;
+  background: #faf8f0;
+  border: 1px solid #e0dacc;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 5px 15px rgba(58, 47, 38, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
   /* Agrego esto para que todas midan lo mismo */
   display: flex;
   flex-direction: column;
+  border-bottom: 3px solid #e0dacc; /* Simula el grosor de las páginas del libro */
+  border-right: 1px solid #e0dacc;
 }
 
 .book:hover {
@@ -66,19 +73,22 @@ main {
 
 
 .book h3 {
+  font-family: 'Playfair Display', serif;
   font-size: 18px;
   margin: 5px 15px;
+  color: #3a2f26;
 }
 
 .book p {
+  font-family: 'Lora', serif;
   margin: 5px 15px;
-  color: #555;
+  color: #5a4b3f;
   font-size: 14px;
 }
 
 .book p:nth-of-type(4) {
   font-weight: 500;
-  color: #e62522;
+  color: #c9a0a0;
   font-size: 16px;
 }
 
@@ -87,7 +97,7 @@ main {
     width: 100%;
     height: 250px; 
     object-fit: contain; 
-    background-color: #f0f0f0; /* Un fondo gris suave por si la imagen no llena todo el ancho */
+    background-color: #f5f1e5;
     padding: 10px; /* Un pequeño aire para que la portada no toque los bordes */
     box-sizing: border-box;
 }
@@ -106,7 +116,9 @@ main {
 #searchInput {
   padding: 12px 20px;
   border-radius: 25px; /* Más redondeado queda más moderno */
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid #e0dacc;
+  background-color: #faf8f0; /* Fondo crema */
+  color: #3a2f26;
   width: 300px;
   outline: none;
   font-size: 15px;
@@ -115,7 +127,8 @@ main {
 
 #searchInput:focus {
   width: 350px;
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  border-color: #a67c52;
+  box-shadow: 0 0 10px rgba(166, 124, 82, 0.2);
 }
 
 
@@ -139,13 +152,13 @@ button:hover {
   padding: 10px;
   border: none;
   border-radius: 6px;
-  background-color: #797272;
-  color: white;
+  background-color: #8c8278;
+  color: #faf8f0;
   cursor: pointer;
 }
 
 .delete-btn:hover {
-  background-color: #7f7b7b;
+  background-color: #797167;
 }
 
 
@@ -161,8 +174,8 @@ button:hover {
 }
 
 #publicarBtn {
-  background-color: #16a085;
-  color: white;
+  background-color: #8e9775;
+  color: #faf8f0;
   border: none;
   padding: 10px 18px;
   border-radius: 8px;
@@ -170,7 +183,7 @@ button:hover {
 }
 
 #publicarBtn:hover {
-  background-color: #1abc9c;
+  background-color: #7a8266;
 }
 
 select {
@@ -306,8 +319,8 @@ textarea#descripcion {
 }
 
 .badge-intercambio {
-    background-color: #a8d0b2; /* Verde éxito */
-    color: white;
+    background-color:#b2c2a0; 
+    color:#faf8f0;
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 11px;
@@ -333,8 +346,8 @@ textarea#descripcion {
 
 /* Botón de Publicar con gradiente */
 #guardarLibro {
-    background: linear-gradient(135deg, #a45db4, #363a94);
-    color: white;
+    background: linear-gradient(135deg, #c9a0a0, #a67c52);
+    color: #faf8f0;
     font-weight: bold;
     padding: 14px;
     border-radius: 10px;
@@ -347,6 +360,22 @@ textarea#descripcion {
 #guardarLibro:hover {
     transform: scale(1.02);
     filter: brightness(1.1);
+}
+
+/* Botón Contactar: Rosa viejo terracota suave */
+.contact-btn {
+    background-color: #c9a0a0; /* Rosa viejo terracota pastel */
+    color: #faf8f0;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.contact-btn:hover {
+    background-color: #b78f8f; /* Tono rosa viejo más oscuro */
 }
 
 @keyframes aparecer {
