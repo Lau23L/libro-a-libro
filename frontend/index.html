@@ -20,7 +20,11 @@
 
   <span id="usuarioNombre"></span>
 
-  <button id="logoutBtn">Cerrar sesión</button>
+  <button id="verMensajesBtn" class="contact-btn" style="background-color: #b8a28c;">
+    📬 Mis Mensajes
+  </button>
+
+  <button id="logoutBtn" style="background-color: #a67c52;">Cerrar sesión</button>
 
   </div>
 
@@ -89,6 +93,15 @@
     <button id="guardarLibro">Publicar Libro</button>
   </div>
 
+</div>
+
+<div id="buzonModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+        <span class="cerrar-buzon cerrar">&times;</span>
+        <h2 style="font-family: 'Playfair Display', serif;">Mi Buzón de Mensajes</h2>
+        <div id="listaMensajes" style="max-height: 400px; overflow-y: auto;">
+            </div>
+    </div>
 </div>
 
     

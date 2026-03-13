@@ -13,6 +13,10 @@ if(usuarioActivo && usuarioNombre){
   usuarioNombre.textContent = "Hola " + usuarioActivo.nombre
 }
 
+if (usuarioActivo) {
+    actualizarNotificaciones();
+}
+
 const logoutBtn = document.getElementById("logoutBtn")
 
 if(logoutBtn){
@@ -25,6 +29,60 @@ window.location.href = "login.html"
 
 })
 
+}
+
+function actualizarNotificaciones() {
+    const todos = JSON.parse(localStorage.getItem("mensajes")) || [];
+    const misMensajes = todos.filter(m => m.receptorId === usuarioActivo.id);
+    
+    // Si hay mensajes, agregamos el número al botón
+    const btn = document.getElementById("verMensajesBtn");
+    if (misMensajes.length > 0) {
+        btn.innerHTML = `📬 Mis Mensajes <span class="notificacion-badget">${misMensajes.length}</span>`;
+    }  else {
+        btn.innerHTML = `📬 Mis Mensajes`;
+    }
+}
+
+function enviarRespuesta(msgOriginalId, receptorId, tituloLibro) {
+    const textarea = document.getElementById(`reply-to-${msgOriginalId}`);
+    const texto = textarea.value;
+
+    if (!texto.trim()) {
+        alert("Por favor, escribe un mensaje.");
+        return;
+    }
+
+    const respuesta = {
+        id: Date.now(),
+        emisorId: usuarioActivo.id,
+        emisorNombre: usuarioActivo.nombre,
+        receptorId: receptorId, // El que era emisor ahora es receptor
+        libroTitulo: tituloLibro,
+        contenido: texto,
+        fecha: new Date().toLocaleString()
+    };
+
+    const mensajesExistentes = JSON.parse(localStorage.getItem("mensajes")) || [];
+    mensajesExistentes.push(respuesta);
+    localStorage.setItem("mensajes", JSON.stringify(mensajesExistentes));
+
+    alert("¡Respuesta enviada con éxito!");
+    textarea.value = ""; // Limpiar el campo
+    buzonModal.style.display = "none"; // Cerrar buzon
+    actualizarNotificaciones(); // Refrescar contador
+}
+
+function borrarMensaje(idMensaje) {
+    if (confirm("¿Estás seguro de que quieres borrar este mensaje?")) {
+        let mensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
+        // Filtramos para dejar todos menos el que queremos borrar
+        mensajes = mensajes.filter(m => m.id !== idMensaje);
+        localStorage.setItem("mensajes", JSON.stringify(mensajes));
+        
+        renderizarMensajes(); // Actualizamos la vista
+        actualizarNotificaciones(); // Actualizamos el globito del botón
+    }
 }
 
 const bookList = document.querySelector(".book-list");
@@ -248,5 +306,83 @@ searchInput.addEventListener("input", function () {
   });
 
 });
+
+/* ---------------- LÓGICA DEL BUZÓN ---------------- */
+
+const buzonModal = document.getElementById("buzonModal");
+const verMensajesBtn = document.getElementById("verMensajesBtn");
+const cerrarBuzon = document.querySelector(".cerrar-buzon");
+const listaMensajes = document.getElementById("listaMensajes");
+
+verMensajesBtn.onclick = function() {
+    renderizarMensajes();
+    buzonModal.style.display = "flex";
+};
+
+cerrarBuzon.onclick = () => buzonModal.style.display = "none";
+
+function renderizarMensajes() {
+    const todosLosMensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
+    // FILTRO: Mensajes donde yo participo (como emisor O como receptor)
+    const misConversaciones = todosLosMensajes.filter(m => 
+        m.receptorId === usuarioActivo.id || m.emisorId === usuarioActivo.id
+    );
+
+    const listaMensajes = document.getElementById("listaMensajes");
+    listaMensajes.innerHTML = ""; 
+
+    if (misConversaciones.length === 0) {
+        listaMensajes.innerHTML = "<p style='font-style: italic; padding: 20px;'>No hay mensajes aún.</p>";
+        return;
+    }
+
+    // Ordenar por fecha para que el chat tenga sentido cronológico
+    misConversaciones.forEach((msg, index) => {
+        const soyYo = msg.emisorId === usuarioActivo.id;
+        const item = document.createElement("div");
+        
+        // Estilo diferente si es enviado o recibido
+        item.style.cssText = `
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 85%;
+            ${soyYo ? 'margin-left: auto; background: #e2e8d8; border-right: 4px solid #8e9775;' : 'margin-right: auto; background: #fdfafd; border-left: 4px solid #b2c2a0;'}
+        `;
+        
+        item.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <span style="font-size: 10px; color: #a67c52;">${msg.fecha}</span>
+                <button onclick="borrarMensaje(${msg.id})" style="background:none; border:none; color:#c9a0a0; cursor:pointer; font-size:12px;">✕</button>
+            </div>
+            <p style="margin: 5px 0; font-size: 13px;">
+                <strong>${soyYo ? "Tú" : msg.emisorNombre}</strong> 
+                <span style="font-size: 11px; opacity: 0.7;">sobre "${msg.libroTitulo}"</span>
+            </p>
+            <div style="font-style: ${soyYo ? 'normal' : 'italic'}; margin: 5px 0;">"${msg.contenido}"</div>
+
+            ${!soyYo ? `
+                <div class="reply-section" style="margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px;">
+                    <textarea id="reply-to-${msg.id}" placeholder="Responder..." style="width: 100%; height: 40px; font-size: 12px;"></textarea>
+                    <button onclick="enviarRespuesta('${msg.id}', '${msg.emisorId}', '${msg.libroTitulo.replace(/'/g, "\\'")}')" 
+                        style="background: #8e9775; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 11px;">
+                        Responder
+                    </button>
+                </div>
+            ` : '<span style="font-size: 10px; color: #8e9775;">✓ Enviado</span>'}
+        `;
+        listaMensajes.appendChild(item);
+    });
+}
+
+// Actualizar el cierre universal (el de hacer clic afuera)
+window.addEventListener("click", function(event) {
+    if (event.target == buzonModal) {
+        buzonModal.style.display = "none";
+    }
+});
+
+// Ejecutar al cargar la página
+actualizarNotificaciones();
 
 
