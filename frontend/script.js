@@ -33,13 +33,13 @@ window.location.href = "login.html"
 
 function actualizarNotificaciones() {
     const todos = JSON.parse(localStorage.getItem("mensajes")) || [];
-    const misMensajes = todos.filter(m => m.receptorId === usuarioActivo.id);
+    // Solo contamos los que son PARA MI y NO ESTÁN LEÍDOS
+    const noLeidos = todos.filter(m => m.receptorId === usuarioActivo.id && !m.leido);
     
-    // Si hay mensajes, agregamos el número al botón
     const btn = document.getElementById("verMensajesBtn");
-    if (misMensajes.length > 0) {
-        btn.innerHTML = `📬 Mis Mensajes <span class="notificacion-badget">${misMensajes.length}</span>`;
-    }  else {
+    if (noLeidos.length > 0) {
+        btn.innerHTML = `📬 Mis Mensajes <span class="notificacion-badget">${noLeidos.length}</span>`;
+    } else {
         btn.innerHTML = `📬 Mis Mensajes`;
     }
 }
@@ -274,7 +274,8 @@ if (enviarMensajeBtn) {
       receptorId: libroSeleccionado.usuarioId,
       libroTitulo: libroSeleccionado.titulo,
       contenido: texto,
-      fecha: new Date().toLocaleString()
+      fecha: new Date().toLocaleString(),
+      leido: false
     };
 
     // Guardar en una lista de mensajes en LocalStorage
@@ -314,6 +315,7 @@ const verMensajesBtn = document.getElementById("verMensajesBtn");
 const cerrarBuzon = document.querySelector(".cerrar-buzon");
 const listaMensajes = document.getElementById("listaMensajes");
 
+// Abrir/Cerrar Buzón
 verMensajesBtn.onclick = function() {
     renderizarMensajes();
     buzonModal.style.display = "flex";
@@ -321,58 +323,126 @@ verMensajesBtn.onclick = function() {
 
 cerrarBuzon.onclick = () => buzonModal.style.display = "none";
 
+
+// 1. Generador de Clave Única (Libro + Usuarios)
+function generarClaveChat(tituloLibro, id1, id2) {
+    const ids = [String(id1), String(id2)].sort().join("-");
+    // Usamos el título del libro como parte de la clave para separar chats
+    const libroKey = tituloLibro.toLowerCase().trim().replace(/\s+/g, '_');
+    return `${libroKey}_${ids}`;
+}
+
+// 2. Renderizar el Buzón
 function renderizarMensajes() {
     const todosLosMensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
-    // FILTRO: Mensajes donde yo participo (como emisor O como receptor)
-    const misConversaciones = todosLosMensajes.filter(m => 
+    const listaMensajes = document.getElementById("listaMensajes");
+    listaMensajes.innerHTML = "";
+
+    // Marcar como leídos
+    todosLosMensajes.forEach(m => {
+        if (m.receptorId === usuarioActivo.id) m.leido = true;
+    });
+    localStorage.setItem("mensajes", JSON.stringify(todosLosMensajes));
+    actualizarNotificaciones();
+
+    // Filtrar mis mensajes
+    const misMsjs = todosLosMensajes.filter(m => 
         m.receptorId === usuarioActivo.id || m.emisorId === usuarioActivo.id
     );
 
-    const listaMensajes = document.getElementById("listaMensajes");
-    listaMensajes.innerHTML = ""; 
-
-    if (misConversaciones.length === 0) {
-        listaMensajes.innerHTML = "<p style='font-style: italic; padding: 20px;'>No hay mensajes aún.</p>";
+    if (misMsjs.length === 0) {
+        listaMensajes.innerHTML = "<p style='padding:20px; text-align:center;'>No tienes mensajes.</p>";
         return;
     }
 
-    // Ordenar por fecha para que el chat tenga sentido cronológico
-    misConversaciones.forEach((msg, index) => {
-        const soyYo = msg.emisorId === usuarioActivo.id;
-        const item = document.createElement("div");
-        
-        // Estilo diferente si es enviado o recibido
-        item.style.cssText = `
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            max-width: 85%;
-            ${soyYo ? 'margin-left: auto; background: #e2e8d8; border-right: 4px solid #8e9775;' : 'margin-right: auto; background: #fdfafd; border-left: 4px solid #b2c2a0;'}
-        `;
-        
-        item.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <span style="font-size: 10px; color: #a67c52;">${msg.fecha}</span>
-                <button onclick="borrarMensaje(${msg.id})" style="background:none; border:none; color:#c9a0a0; cursor:pointer; font-size:12px;">✕</button>
-            </div>
-            <p style="margin: 5px 0; font-size: 13px;">
-                <strong>${soyYo ? "Tú" : msg.emisorNombre}</strong> 
-                <span style="font-size: 11px; opacity: 0.7;">sobre "${msg.libroTitulo}"</span>
-            </p>
-            <div style="font-style: ${soyYo ? 'normal' : 'italic'}; margin: 5px 0;">"${msg.contenido}"</div>
-
-            ${!soyYo ? `
-                <div class="reply-section" style="margin-top: 8px; border-top: 1px dashed #ccc; padding-top: 8px;">
-                    <textarea id="reply-to-${msg.id}" placeholder="Responder..." style="width: 100%; height: 40px; font-size: 12px;"></textarea>
-                    <button onclick="enviarRespuesta('${msg.id}', '${msg.emisorId}', '${msg.libroTitulo.replace(/'/g, "\\'")}')" 
-                        style="background: #8e9775; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-top: 5px; font-size: 11px;">
-                        Responder
-                    </button>
-                </div>
-            ` : '<span style="font-size: 10px; color: #8e9775;">✓ Enviado</span>'}
-        `;
-        listaMensajes.appendChild(item);
+    // AGRUPAR POR LIBRO + USUARIOS
+    const grupos = {};
+    misMsjs.forEach(m => {
+        const clave = generarClaveChat(m.libroTitulo, m.emisorId, m.receptorId);
+        if (!grupos[clave]) grupos[clave] = [];
+        grupos[clave].push(m);
     });
+
+    for (const clave in grupos) {
+        const chat = grupos[clave];
+        const info = chat[0];
+        const otraPersonaId = info.emisorId === usuarioActivo.id ? info.receptorId : info.emisorId;
+        const otraPersonaNombre = info.emisorId === usuarioActivo.id ? (info.receptorNombre || "Usuario") : info.emisorNombre;
+
+        const contenedorChat = document.createElement("div");
+        contenedorChat.className = "chat-container-vintage"; // Podés darle estilo en CSS
+        contenedorChat.style.cssText = "border: 1px solid #e0dacc; margin-bottom: 20px; border-radius: 8px; background: #faf8f0; overflow: hidden;";
+        
+        contenedorChat.innerHTML = `
+            <div style="background: #8e9775; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-family: 'Playfair Display'; font-weight:bold;">📖 ${info.libroTitulo} <small>(con ${otraPersonaNombre})</small></span>
+                <button onclick="borrarConversacion('${clave}')" style="background:#c9a0a0; color:white; border:none; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:11px;">Cerrar Chat</button>
+            </div>
+            <div style="padding: 15px; max-height: 200px; overflow-y: auto; background: #fdf6e3; display: flex; flex-direction: column; gap: 8px;">
+                ${chat.map(m => `
+                    <div style="align-self: ${m.emisorId === usuarioActivo.id ? 'flex-end' : 'flex-start'}; max-width: 80%;">
+                        <div style="padding: 8px 12px; border-radius: 12px; font-size: 13px; 
+                            background: ${m.emisorId === usuarioActivo.id ? '#e2e8d8' : '#fff'};
+                            border: 1px solid #dcd7c9;">
+                            ${m.contenido}
+                            <div style="font-size: 9px; opacity: 0.5; margin-top: 3px; text-align: right;">${m.fecha.split(',')[1] || ''}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="padding: 10px; border-top: 1px dashed #e0dacc; display: flex; gap: 5px; background: #fdf6e3;">
+                <input type="text" id="input-${clave}" placeholder="Responder..." style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <button onclick="enviarRespuestaGrupal('${clave}', '${otraPersonaId}', '${info.libroTitulo.replace(/'/g, "\\'")}', '${otraPersonaNombre}')" 
+                    style="background: #a67c52; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                    Enviar
+                </button>
+            </div>
+        `;
+        listaMensajes.appendChild(contenedorChat);
+    }
+}
+
+// 3. Enviar Respuesta
+function enviarRespuestaGrupal(clave, receptorId, titulo, receptorNombre) {
+    const input = document.getElementById(`input-${clave}`);
+    const texto = input.value;
+    if (!texto.trim()) return;
+
+    const respuesta = {
+        id: Date.now(),
+        emisorId: usuarioActivo.id,
+        emisorNombre: usuarioActivo.nombre,
+        receptorId: receptorId,
+        receptorNombre: receptorNombre,
+        libroTitulo: titulo,
+        contenido: texto,
+        fecha: new Date().toLocaleString(),
+        leido: false
+    };
+
+    const mensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
+    mensajes.push(respuesta);
+    localStorage.setItem("mensajes", JSON.stringify(mensajes));
+    
+    input.value = "";
+    renderizarMensajes();
+}
+
+// 4. Borrar Conversación
+function borrarConversacion(clave) {
+    if (confirm("¿Borrar esta charla?")) {
+        let mensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
+        mensajes = mensajes.filter(m => generarClaveChat(m.libroTitulo, m.emisorId, m.receptorId) !== clave);
+        localStorage.setItem("mensajes", JSON.stringify(mensajes));
+        renderizarMensajes();
+    }
+}
+
+// Función auxiliar para no errar el receptor
+function receptorIdCorrecto(clave, otraPersonaId) {
+    // La clave contiene los dos IDs. Si el usuario activo es uno, el receptor es el otro.
+    // Pero para simplificar, usamos directamente el ID que capturamos en el render.
+    return receptorId; 
 }
 
 // Actualizar el cierre universal (el de hacer clic afuera)
