@@ -26,7 +26,7 @@ El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria
 
 | Nueva Interfaz & Agenda | Sección Recomendados | Mensajería Interna |
 | :---: | :---: | :---: |
-| ![Index](/imagenes/Index_recording.mp4) | ![Recomendados](/imagenes/Recomendados.jpg) | ![Mensaje](/imagenes/chat_hilos.png) |
+| ![Index](/imagenes/index_v2.png) | ![Recomendados](/imagenes/Recomendados.jpg) | ![Mensaje](/imagenes/chat_hilos.png) |
 
 
 ---
