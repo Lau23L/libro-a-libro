@@ -45,6 +45,10 @@ El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria
 ---
 
 ## 📈 Roadmap (Próximos Pasos)
+
+https://github.com/user-attachments/assets/24951f37-643c-406a-999b-7db46defb790
+
+
 - [x] **Panel de Comunidad:** Agenda local y recomendaciones fijas.
 - [x] **Interfaz Responsive:** Layout de dos columnas adaptable.
 - [ ] **Corrección de flujo de chat:** Optimización de recepción de mensajes en tiempo real.
