@@ -31,7 +31,7 @@ El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria
 
 
 ## 📱 Demostración en Vivo
-![Demo de la Plataforma](/imagenes/Index_recording1.mp4)
+![Demo de la Plataforma][(/imagenes/Index_recording1.mp4)](https://github.com/user-attachments/assets/24951f37-643c-406a-999b-7db46defb790)
 *En este video se puede apreciar el diseño vintage, la navegación por la agenda de MDQ y el efecto de los libros recomendados.*
 
 ---
@@ -45,10 +45,6 @@ El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria
 ---
 
 ## 📈 Roadmap (Próximos Pasos)
-
-https://github.com/user-attachments/assets/24951f37-643c-406a-999b-7db46defb790
-
-
 - [x] **Panel de Comunidad:** Agenda local y recomendaciones fijas.
 - [x] **Interfaz Responsive:** Layout de dos columnas adaptable.
 - [ ] **Corrección de flujo de chat:** Optimización de recepción de mensajes en tiempo real.
