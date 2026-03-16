@@ -9,6 +9,7 @@ El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria
 - **Diseño Vintage & Responsive:** Interfaz inspirada en páginas de libros antiguos, con colores pasteles y tipografías clásicas (Playfair Display y Lora).
 - **Agenda Cultural MDQ:** Espacio dedicado a eventos literarios locales, ferias (como la de Plaza Mitre) y clubes de lectura.
 - **Sección de Recomendados:** Curaduría de libros destacados con efectos visuales dinámicos (Hover effects).
+- **Rincón de Bienestar:** Espacio dedicado a libros de crecimiento personal y autoayuda con estética diferenciada.
 - **Mensajería por Hilos:** Sistema de chat organizado por libro y usuario para facilitar los intercambios.
 - **Buscador Inteligente:** Filtro en tiempo real por título, autor o género.
 - **Gestión de Inventario:** Publicación de libros con carga de imágenes y control de autoría para eliminación.
@@ -28,6 +29,10 @@ El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria
 | :---: | :---: | :---: |
 | ![Index](/imagenes/index_v2.png) | ![Recomendados](/imagenes/Recomendados.jpg) | ![Mensaje](/imagenes/chat_hilos.png) |
 
+
+## 📱 Demostración en Vivo
+![Demo de la Plataforma](ruta-de-tu-video-o-gif)
+*En este video se puede apreciar el diseño vintage, la navegación por la agenda de MDQ y el efecto de los libros recomendados.*
 
 ---
 
