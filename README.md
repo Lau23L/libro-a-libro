@@ -1,47 +1,53 @@
 # 📚 Libro a Libro
 
-Plataforma web para compra, venta e intercambio de libros usados enfocada en la comunidad de **Mar del Plata**.
+Plataforma web para compra, venta e intercambio de libros usados, diseñada específicamente para la comunidad de **Mar del Plata**. Una experiencia vintage para amantes de las historias.
 
-## 🚀 Estado del Proyecto: MVP Completado
-El proyecto ha alcanzado su primera versión funcional estable, permitiendo un flujo completo de usuario.
+## 🚀 Estado del Proyecto: Interfaz Avanzada & Comunidad
+El proyecto ha evolucionado de un simple inventario a una plataforma comunitaria con un diseño cuidado y funcional.
 
-### Funcionalidades actuales:
-- **Autenticación Personalizada:** Sistema de registro e inicio de sesión con validación de credenciales.
-- **Gestión de Inventario:** Los usuarios pueden publicar libros, subir imágenes y gestionar sus propias publicaciones (solo el dueño puede eliminar sus libros).
+### Funcionalidades destacadas:
+- **Diseño Vintage & Responsive:** Interfaz inspirada en páginas de libros antiguos, con colores pasteles y tipografías clásicas (Playfair Display y Lora).
+- **Agenda Cultural MDQ:** Espacio dedicado a eventos literarios locales, ferias (como la de Plaza Mitre) y clubes de lectura.
+- **Sección de Recomendados:** Curaduría de libros destacados con efectos visuales dinámicos (Hover effects).
+- **Mensajería por Hilos:** Sistema de chat organizado por libro y usuario para facilitar los intercambios.
 - **Buscador Inteligente:** Filtro en tiempo real por título, autor o género.
-- **Mensajería Interna:** Sistema para contactar vendedores y acordar puntos de encuentro de forma segura.
+- **Gestión de Inventario:** Publicación de libros con carga de imágenes y control de autoría para eliminación.
 
 ---
 
 ## 🛠️ Tecnologías Implementadas
-- **Frontend:** HTML5, CSS3 (Flexbox, Grid, Animaciones dinámicas).
-- **Lógica:** JavaScript (ES6+), manejo de eventos dinámicos y persistencia de sesión.
-- **Almacenamiento:** `LocalStorage` para persistencia de datos (Libros, Usuarios y Mensajes).
+- **Frontend:** HTML5, CSS3 (Estructura de 2 columnas con Flexbox, Grid y Posicionamiento Sticky).
+- **Lógica:** JavaScript (ES6+), manejo de persistencia con `LocalStorage`.
+- **Estilos:** Animaciones dinámicas, paleta de colores vintage y diseño adaptable (Mobile First).
 
 ---
 
-## 📱 Vista Previa
+## 📱 Vista Previa (Versión 2.0)
 
-| Index | Publicación de Libros | Mensajería Interna |
+| Nueva Interfaz & Agenda | Sección Recomendados | Mensajería Interna |
 | :---: | :---: | :---: |
-| ![Index](/imagenes/index.jpg) | ![Publicar](/imagenes/publicar-libro.jpg) | ![Mensaje](/imagenes/Contactar.jpg) |
+| ![Index](/imagenes/index_v2.jpg) | ![Recomendados](/imagenes/recomendados.jpg) | ![Mensaje](/imagenes/chat_hilos.jpg) |
+
 
 ---
 
 ## 🛠️ Guía de Uso Rápido
 1. Clonar el repositorio.
-2. Abrir `index.html` en el navegador (no requiere servidor por el momento).
-3. **Registro:** Crear una cuenta en `registro.html`.
-4. **Login:** Ingresar con tus credenciales.
-5. **Explorar:** ¡Publicá un libro o contactá a otro vendedor!
+2. Abrir `index.html` en el navegador.
+3. **Explorar:** Mirá los eventos actuales en Mar del Plata en el margen derecho.
+4. **Interactuar:** Iniciá sesión para publicar o contactar vendedores.
 
 ---
 
-## 📈 Próximos Pasos (Roadmap)
-- [ ] Migración de datos a **PostgreSQL**.
-- [ ] Implementación de Backend con **Node.js**.
-- [ ] Panel de "Mis Mensajes" para gestionar conversaciones recibidas.
-- [ ] Geolocalización para puntos de encuentro sugeridos en Mar del Plata.
+## 📈 Roadmap (Próximos Pasos)
+- [x] **Panel de Comunidad:** Agenda local y recomendaciones fijas.
+- [x] **Interfaz Responsive:** Layout de dos columnas adaptable.
+- [ ] **Corrección de flujo de chat:** Optimización de recepción de mensajes en tiempo real.
+- [ ] **Geolocalización:** Integración directa con mapas para puntos de encuentro en MDQ.
+- [ ] **Backend Real:** Migración a Node.js y PostgreSQL para persistencia multi-usuario.
 
 ## 📊 Database Diagram
 ![Database Diagram](diagramas/database-diagram.png)
+
+---
+Hecho con ❤️ en Mar del Plata.
